@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Two</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f7f4ef;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 520px;
+      text-align: center;
+    }
+
+    .main-image {
+      width: 260px;
+      max-width: 80%;
+      border-radius: 18px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .text-box {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 20px;
+      line-height: 1.8;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      font-size: 1.05rem;
+      white-space: pre-line;
+    }
+
+    input {
+      width: 180px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    button {
+      display: block;
+      margin: 0 auto;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 12px;
+      background-color: #333;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <img src="../resource/Two_image.png" alt="Two image" class="main-image" />
+
+    <div class="text-box">
+감쟈 생일 - 그녀의 생일 = A
+
+그녀의 나이 = B
+
+A + B = ?
+    </div>
+
+    <input type="text" id="answer" placeholder="정답 입력" />
+    <button onclick="checkAnswer()">입력</button>
+  </div>
+
+  <script>
+    function checkAnswer() {
+      const answer = document.getElementById("answer").value.trim();
+
+      if (answer === "26") {
+        alert("그녀에 대해 잘 아시는군요\n\n하지만 제가 자주 쓰는 비밀번호는 모르시는 군요...");
+      } else {
+        alert("그녀에 대해서 잘 모르시나요..?!");
+      }
+    }
+  </script>
+</body>
+</html>

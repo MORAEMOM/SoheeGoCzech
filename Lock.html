@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lock</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #111;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    .lock-container {
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 24px;
+      font-size: 2rem;
+      letter-spacing: 2px;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 80px);
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .key {
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
+      border: 1px solid #555;
+      background: #222;
+      color: white;
+      font-size: 1.8rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.2s;
+    }
+
+    .key:hover {
+      background: #333;
+      transform: scale(1.06);
+    }
+
+    .zero {
+      grid-column: 2;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="lock-container">
+    <h1>LOCK</h1>
+    <h3>이 페이지를 찾았을 때 쯤 나는 한국이 아니겠지?<br>
+      보고싶을거야.<br><br> 
+      그래도 우리, 마저 게임을 시작하자!<br>
+      <br>
+      우리는 천생연분이잖아?
+      <br>
+      내가 자주 쓰는 비밀번호 네자리 정도는 당연히 알겠지? 
+      <br><br>
+      순서대로 들어가서 문제를 풀어봐</h1>
+
+    <div class="keypad">
+      <button class="key" title="One" onclick="location.href='One.html'">1</button>
+      <button class="key" title="Two" onclick="location.href='Two.html'">2</button>
+      <button class="key" title="Three" onclick="location.href='Three.html'">3</button>
+
+      <button class="key" title="Four" onclick="location.href='Four.html'">4</button>
+      <button class="key" title="Five" onclick="location.href='Five.html'">5</button>
+      <button class="key" title="Six" onclick="location.href='Six.html'">6</button>
+
+      <button class="key" title="Seven" onclick="location.href='Seven.html'">7</button>
+      <button class="key" title="Eight" onclick="location.href='Eight.html'">8</button>
+      <button class="key" title="Nine" onclick="location.href='Nine.html'">9</button>
+
+      <button class="key zero" title="Zero" onclick="goZero()">0</button>
+    </div>
+  </div>
+
+  <script>
+    function goZero() {
+      const zeroSolved = localStorage.getItem("zeroSolved");
+
+      if (zeroSolved === "true") {
+        location.href = "Zero2.html";
+      } else {
+        location.href = "Zero1.html";
+      }
+    }
+  </script>
+</body>
+</html>

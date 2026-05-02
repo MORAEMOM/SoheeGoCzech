@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Four</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .text-box {
+      background: #222;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .choice {
+      font-size: 2rem;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    .emoji-row {
+      font-size: 2rem;
+      margin: 15px 0;
+    }
+
+    .btns {
+      display: grid;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    button {
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background: #333;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #555;
+    }
+
+    /* 전광판 */
+    .board {
+      margin-top: 20px;
+      background: black;
+      color: #00ff55;
+      font-family: monospace;
+      font-size: 1.3rem;
+      padding: 15px;
+      border-radius: 10px;
+      min-height: 40px;
+      box-shadow: 0 0 10px #00ff55;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="container">
+
+    <div class="text-box" id="text">
+      문제 만들기 어려우니 이번엔 좀 쉽게 갈게요. 괜찮죠?
+    </div>
+
+    <div id="choices">
+      <span class="choice" onclick="firstChoice('O')">⭕</span>
+      <span class="choice" onclick="firstChoice('X')">❌</span>
+    </div>
+
+  </div>
+
+  <script>
+    const container = document.getElementById("container");
+
+    function firstChoice(choice) {
+      if (choice === "O") {
+        container.innerHTML = `
+          <div class="text-box">
+            그렇다면 제가 만든 이 페이지는 정답으로 이끄는 페이지 일까요?
+          </div>
+
+          <div>
+            <span class="choice" onclick="secondChoice('O')">⭕</span>
+            <span class="choice" onclick="secondChoice('X')">❌</span>
+          </div>
+        `;
+      }
+    }
+
+    function secondChoice(choice) {
+      if (choice === "O") {
+        container.innerHTML = `
+          <div class="text-box">
+            오호 자신에 대한 믿음이 강하시군요<br><br>
+            그렇다면 매우 쉬운 퀴즈를 하나 내도록 하죠.<br><br>
+            이모티콘으로 애니메이션 제목 맞추기!
+          </div>
+
+          <div class="emoji-row">
+            👦 👦 👦 👦 👦 👦
+          </div>
+
+          <div class="btns">
+            <button onclick="answer(1)">1. 데스노트</button>
+            <button onclick="answer(2)">2. 오소마츠상</button>
+            <button onclick="answer(3)">3. 도라에몽</button>
+            <button onclick="answer(4)">4. 진격의 거인</button>
+            <button onclick="answer(5)">5. 귀멸의 칼날</button>
+          </div>
+
+          <div class="board" id="board"></div>
+        `;
+      }
+    }
+
+    function answer(num) {
+      const board = document.getElementById("board");
+
+      if (num === 2) {
+        board.textContent = "정답 : 빤쥬정리함을 확인하세요";
+      } else {
+        board.textContent = "땡!";
+      }
+    }
+  </script>
+</body>
+</html>

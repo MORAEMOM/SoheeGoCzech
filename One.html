@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nonogram</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #222831;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .wrap {
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 1.6rem;
+    }
+
+    .nonogram {
+      display: grid;
+      grid-template-columns: 70px repeat(10, 28px);
+      grid-template-rows: 70px repeat(10, 28px);
+      border: 2px solid #888;
+      background: #2f363d;
+    }
+
+    .corner,
+    .top-hint,
+    .left-hint,
+    .cell {
+      border: 1px solid #555;
+      box-sizing: border-box;
+    }
+
+    .corner {
+      background: #333;
+    }
+
+    .top-hint {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 4px;
+      font-size: 12px;
+      line-height: 1.2;
+      white-space: pre-line;
+      font-weight: bold;
+    }
+
+    .left-hint {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .cell {
+      width: 28px;
+      height: 28px;
+      background: #2f363d;
+      cursor: pointer;
+    }
+
+    .cell.checked {
+      background: #f7f4ef;
+    }
+
+    .cell:nth-child(5n) {
+      border-right-color: #aaa;
+    }
+
+    button {
+      margin-top: 18px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      background: #f7f4ef;
+      color: #222;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ddd;
+    }
+
+    .message {
+      margin-top: 14px;
+      min-height: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>네모로직을 풀어라</h1>
+
+    <div class="nonogram" id="nonogram"></div>
+
+    <button onclick="checkAnswer()">입력</button>
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    const topHints = [
+      "0",
+      "2",
+      "2\n1\n1",
+      "2\n1\n1",
+      "2\n2\n2",
+      "6",
+      "2",
+      "2\n1\n1",
+      "1\n1",
+      "2"
+    ];
+
+    const leftHints = [
+      "2",
+      "2",
+      "2 2",
+      "2 2",
+      "2",
+      "2 2",
+      "2 1 1 1",
+      "1 1 2 1",
+      "1 4",
+      "3"
+    ];
+
+    // 1 = 칠해야 하는 칸, 0 = 빈칸
+    const answer = [
+      [0,0,0,0,1,1,0,0,0,0],
+      [0,0,0,0,1,1,0,0,0,0],
+      [0,0,1,1,0,0,1,1,0,0],
+      [0,0,1,1,0,0,1,1,0,0],
+      [0,0,0,0,1,1,0,0,0,0],
+      [0,0,1,1,0,0,1,1,0,0],
+      [0,0,1,1,0,1,0,1,0,1],
+      [0,1,0,1,0,1,1,0,1,0],
+      [0,1,0,0,1,1,1,1,0,0],
+      [0,0,0,1,1,1,0,0,0,0]
+    ];
+
+    const nonogram = document.getElementById("nonogram");
+    const message = document.getElementById("message");
+    const cells = [];
+
+    function createBoard() {
+      const corner = document.createElement("div");
+      corner.className = "corner";
+      nonogram.appendChild(corner);
+
+      topHints.forEach(hint => {
+        const div = document.createElement("div");
+        div.className = "top-hint";
+        div.textContent = hint;
+        nonogram.appendChild(div);
+      });
+
+      for (let r = 0; r < 10; r++) {
+        const left = document.createElement("div");
+        left.className = "left-hint";
+        left.textContent = leftHints[r];
+        nonogram.appendChild(left);
+
+        cells[r] = [];
+
+        for (let c = 0; c < 10; c++) {
+          const cell = document.createElement("div");
+          cell.className = "cell";
+          cell.dataset.row = r;
+          cell.dataset.col = c;
+
+          cell.addEventListener("click", () => {
+            cell.classList.toggle("checked");
+          });
+
+          cells[r][c] = cell;
+          nonogram.appendChild(cell);
+        }
+      }
+    }
+
+    function checkAnswer() {
+      for (let r = 0; r < 10; r++) {
+        for (let c = 0; c < 10; c++) {
+          const isChecked = cells[r][c].classList.contains("checked") ? 1 : 0;
+
+          if (isChecked !== answer[r][c]) {
+            message.textContent = "😏 다시 확인해봐!";
+            return;
+          }
+        }
+      }
+
+      message.textContent = "내가 자주 쓰는 비밀번호엔 1이 없는데^^";
+
+      setTimeout(() => {
+        window.location.href = "Next3.html";
+      }, 1000);
+    }
+
+    createBoard();
+  </script>
+</body>
+</html>

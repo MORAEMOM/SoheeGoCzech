@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Q1</title>
+
+  <!-- 아이콘 (Font Awesome CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .cat-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    input[type="date"] {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      background-color: #fff;
+      color: #111;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- 검은 고양이 아이콘 -->
+    <div class="cat-icon">
+      <i class="fa-solid fa-cat"></i>
+    </div>
+
+    <!-- 질문 -->
+    <div class="question">냥제리데이는?</div>
+
+    <!-- 입력 -->
+    <form onsubmit="return checkDate()">
+      <input type="date" id="dateInput" required />
+      <br />
+      <button type="submit">입력</button>
+    </form>
+  </div>
+
+  <script>
+    function checkDate() {
+      const input = document.getElementById("dateInput").value;
+
+      // yyyy-mm-dd → yyyymmdd 변환
+      const formatted = input.replaceAll("-", "");
+
+      if (formatted === "240810" || formatted === "20240810") {
+        window.location.href = "Next2.html";
+      } else {
+        alert("왜 모르지...!!!!");
+      }
+
+      return false;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zero1</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f7f4ef;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+
+    .game-box {
+      width: 90%;
+      max-width: 520px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: opacity 1s;
+    }
+
+    .fade-out {
+      opacity: 0;
+    }
+
+    h2 {
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .answers {
+      display: grid;
+      gap: 12px;
+    }
+
+    button {
+      padding: 12px 16px;
+      border: none;
+      border-radius: 12px;
+      background-color: #f1e7dc;
+      color: #333;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.15s, background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #e6d4c3;
+      transform: scale(1.03);
+    }
+
+    .result {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="game-box" id="gameBox">
+    <h2 id="question"></h2>
+    <div class="answers" id="answers"></div>
+  </div>
+
+  <script>
+    const gameBox = document.getElementById("gameBox");
+    const question = document.getElementById("question");
+    const answers = document.getElementById("answers");
+
+    const questions = [
+      {
+        text: "Q1. 소희가 배가 고프다면서 먹고 싶은 것은 없다고 한다. 어떻게 해야할까?",
+        options: [
+          "1. 그럼 생각나면 먹자.",
+          "2. 아구 배고파? 얼른 뭐 먹자~",
+          "3. 난 배 안 고픈데?",
+          "4. 그렇구나."
+        ],
+        correct: 1
+      },
+      {
+        text: "Q2. 강소희의 아들 이름을 고르시오.",
+        options: [
+          "1. 본조르노",
+          "2. 영호",
+          "3. 알로드",
+          "4. 강모래"
+        ],
+        correct: 3
+      },
+      {
+        text: "Q3. 강모래의 특징이 아닌 것은?",
+        options: [
+          "1. 왼쪽 어깨 상처",
+          "2. 부러진 송곳니",
+          "3. 배쨜",
+          "4. 귀여움"
+        ],
+        correct: 0
+      }
+    ];
+
+    let currentQuestion = 0;
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+
+      question.textContent = q.text;
+      answers.innerHTML = "";
+
+      q.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = () => checkAnswer(index);
+        answers.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selectedIndex) {
+      const q = questions[currentQuestion];
+
+      if (selectedIndex === q.correct) {
+        gameBox.classList.add("fade-out");
+
+        setTimeout(() => {
+          currentQuestion++;
+
+          if (currentQuestion < questions.length) {
+            showQuestion();
+            gameBox.classList.remove("fade-out");
+          } else {
+            question.textContent = "참 잘했어요!";
+question.className = "result";
+answers.innerHTML = "";
+
+localStorage.setItem("zeroSolved", "true");
+gameBox.classList.remove("fade-out");
+
+// 1초 후 Lock으로 이동
+setTimeout(() => {
+  window.location.href = "Lock.html";
+}, 1000);
+          }
+        }, 1000);
+      } else {
+        alert("땡!");
+      }
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>

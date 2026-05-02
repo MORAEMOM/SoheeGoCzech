@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Three</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #f7f4ef;
+      font-family: Arial, sans-serif;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 760px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 18px;
+    }
+
+    .code-box {
+      background: #1e1e1e;
+      color: #dcdcdc;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: left;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+      overflow-x: auto;
+      margin-bottom: 20px;
+      white-space: pre;
+    }
+
+    .question-text {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 22px;
+      line-height: 1.6;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .button-area {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .num-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .num-btn {
+      width: 52px;
+      height: 52px;
+      border: none;
+      border-radius: 14px;
+      background-color: #333;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.15s, background-color 0.2s;
+    }
+
+    .num-btn:hover {
+      background-color: #555;
+      transform: scale(1.06);
+    }
+
+    .letter-box {
+      min-height: 90px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      line-height: 1.7;
+      white-space: pre-line;
+      color: #333;
+    }
+
+    @media (max-width: 620px) {
+      .button-area {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .num-btn {
+        width: 58px;
+        height: 58px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h3>Q. 다음 엑센의 코드를 보고 오류가 나는 부분을 찾아 적으시오.</h3>
+
+    <div class="code-box"> private bool Save_Lots(string LOC_MOVE_NO, string LOC_MOVE_SEQ)
+        {
+            try
+            {
+                1. ExecuteInfo exInfo = new ExecuteInfo();
+                2. exInfo.CommandType = Manager.CommandType.Batch;
+
+                3. bi = exInfo.CreateBatchInfo();
+                4. bi.StoredProcedureName = "USP_PDM_SHM_036_T_03";
+
+                5. for (int i = grd_Detail_Request.Rows.Fixed; i < grd_Detail_Request.Rows.Count; i++)
+                {
+                    bi = exInfo.CreateBatchInfo();
+
+                    bi.AddParameter("@LOC_MOVE_NO", LOC_MOVE_SEQ);
+                    bi.AddParameter("@LOC_MOVE_SEQ", LOC_MOVE_SEQ);
+                    bi.AddParameter("@LOT_NO", objTostr(grd_Detail_Request.Rows[i]["LOT_NO"]));
+                    bi.AddParameter("@BARCODE", objTostr(grd_Detail_Request.Rows[i]["LOT_NO"]));
+                    bi.AddParameter("@PART_YN", objTostr(grd_Detail_Request.Rows[i]["PART_YN"]));
+                    bi.AddParameter("@INS_EMP", XN.Global.UserInfo.Emp_Code);
+                    bi.AddParameter("@LANGUAGE", XN.Global.MultiLanguage.SelectedLanguage);
+
+                    6. exInfo.AddBatchInfo(bi);
+                }
+
+                7. IExecuteResult exResult = this.Execute(exInfo);
+
+                if (exResult.ExecuteSuccess)
+                {
+                    //출고등록되었습니다.
+                    8. this.MessageBoxShow(XNMultiLanguageConvertor.CodeToMessage("MK2026042400003"), "System", MessageBoxButtons.OK, Telerik.WinControls.RadMessageIcon.Info);
+                    9. return;
+                }
+                else
+                {
+                    //데이터 저장에 실패했습니다.
+                    this.MessageBoxShow(XNMultiLanguageConvertor.CodeToMessage("Data saving failed.") + exResult.ExceptionMessage, "System", MessageBoxButtons.OK, Telerik.WinControls.RadMessageIcon.Error);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                //데이터 조회에 실패하였습니다. : \n
+                this.MessageBoxShow(XNMultiLanguageConvertor.CodeToMessage("MK2024092500028") + ex.Message, "System", MessageBoxButtons.OK, Telerik.WinControls.RadMessageIcon.Error);
+                return false;
+            }
+        }</div>
+
+    <div class="question-text">
+      오류가 나는 곳은 총 세군데입니다.<br />
+      오름차순 순으로 번호를 찾아 클릭하세요.
+    </div>
+
+    <div class="button-area">
+      <div class="num-wrap">
+        <button class="num-btn" onclick="showLetters(1)">1</button>
+        <div class="letter-box" id="letter1"></div>
+      </div>
+
+      <div class="num-wrap">
+        <button class="num-btn" onclick="showLetters(2)">2</button>
+        <div class="letter-box" id="letter2"></div>
+      </div>
+
+      <div class="num-wrap">
+        <button class="num-btn" onclick="showLetters(3)">3</button>
+        <div class="letter-box" id="letter3"></div>
+      </div>
+
+      <div class="num-wrap">
+        <button class="num-btn" onclick="showLetters(4)">4</button>
+        <div class="letter-box" id="letter4"></div>
+      </div>
+
+      <div class="num-wrap">
+        <button class="num-btn" onclick="showLetters(5)">5</button>
+        <div class="letter-box" id="letter5"></div>
+      </div>
+
+      <div class="num-wrap">
+        <button class="num-btn" onclick="showLetters(6)">6</button>
+        <div class="letter-box" id="letter6"></div>
+      </div>
+
+      <div class="num-wrap">
+        <button class="num-btn" onclick="showLetters(7)">7</button>
+        <div class="letter-box" id="letter7"></div>
+      </div>
+
+      <div class="num-wrap">
+        <button class="num-btn" onclick="showLetters(8)">8</button>
+        <div class="letter-box" id="letter8"></div>
+      </div>
+
+      <div class="num-wrap">
+        <button class="num-btn" onclick="showLetters(9)">9</button>
+        <div class="letter-box" id="letter9"></div>
+      </div>
+    </div>
+
+    <p>글자를 조합하면 깨달을 수 있을 거양 &gt;&lt;</p>
+  </div>
+
+  <script>
+    const letters = {
+      1: "ㄱ\nㅏ",
+      2: "ㅇ\nㅏ",
+      3: "ㄴ\nㅣ\nㄴ",
+      4: "ㄱ\nㅗ\nㅇ",
+      5: "ㅎ\nㅏ",
+      6: "ㅇ\nㅣ",
+      7: "ㅈ\nㅗ\nㅇ",
+      8: "ㅁ\nㅏ",
+      9: "ㄷ\nㅔ"
+    };
+
+    function showLetters(num) {
+      const target = document.getElementById("letter" + num);
+      target.textContent = letters[num];
+    }
+  </script>
+</body>
+</html>
